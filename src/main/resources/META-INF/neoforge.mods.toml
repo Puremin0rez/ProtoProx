@@ -1,0 +1,20 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "protoprox"
+version = "${version}"
+displayName = "ProtoProx"
+authors = "Puremin0rez"
+description = "Proxy Protocol (V1 & V2) support for Minecraft servers"
+
+[[mixins]]
+config = "protoprox.mixins.json"
+
+[[dependencies.protoprox]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,)"
+ordering = "NONE"
+side = "SERVER"

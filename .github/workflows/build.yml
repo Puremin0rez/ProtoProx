@@ -1,0 +1,31 @@
+name: Build ProtoProx
+on: [ push, pull_request ]
+jobs:
+  build:
+    # Only run on PRs if the source branch is on someone else's repo
+    if: ${{ github.event_name != 'pull_request' || github.repository != github.event.pull_request.head.repo.full_name }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Upload Artifact(s)
+        uses: actions/upload-artifact@v7
+        with:
+          name: ProtoProx Archive
+          path: |
+            build/libs/ProtoProx-*.jar
+            !build/libs/ProtoProx-*-dev.jar
